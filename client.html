@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Counter App</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+  <h1>Counter App</h1>
+  <p>Current Value: <span id="counterValue"></span></p>
+  <input type="number" id="valueInput" placeholder="Enter value">
+  <button onclick="increment()">Increment</button>
+  <button onclick="decrement()">Decrement</button>
+
+  <script>
+    function updateCounter() {
+      $.ajax({
+        url: '/',
+        type: 'GET',
+        success: function(response) {
+          $('#counterValue').text(response);
+        },
+        error: function() {
+          console.log('Error occurred while retrieving the counter value');
+        }
+      });
+    }
+
+    function increment() {
+      const value = $('#valueInput').val();
+      $.ajax({
+        url: '/inc?n=' + value,
+        type: 'GET',
+        success: function() {
+          updateCounter();
+        },
+        error: function() {
+          console.log('Error occurred while incrementing the counter');
+        }
+      });
+    }
+
+    function decrement() {
+      const value = $('#valueInput').val();
+      $.ajax({
+        url: '/dec?n=' + value,
+        type: 'GET',
+        success: function() {
+          updateCounter();
+        },
+        error: function() {
+          console.log('Error occurred while decrementing the counter');
+        }
+      });
+    }
+
+    // Initial counter value retrieval
+    updateCounter();
+  </script>
+</body>
+</html>
