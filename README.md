@@ -66,4 +66,4 @@ In particular, the server uses CORS ([Cross-Origin Resource Sharing](https://en.
 ## demo
 1. launch the server from the `counter` folder where `counter.js` is located with the command `node counter.js`
 2. open [http://127.0.0.1:3000/client](http://127.0.0.1:3000/client) to try the demo
-3. open the file in `./otherServer
+3. open the file in `./otherServer`
