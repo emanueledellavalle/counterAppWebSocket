@@ -1,4 +1,6 @@
 # counterApp
+Autore: [Emanuele Della Valle](http://emanueledellavalle.org/), [Matteo Valoriani](https://www.linkedin.com/in/matteovaloriani/)
+
 Un'applicazione web minimale in nodejs, html e js che dimostra i servizi REST.
 
 ## Architettura
@@ -37,6 +39,7 @@ In particolare, il server utilizza CORS ([Cross-Origin Resource Sharing](https:/
 A minimalist web application in nodejs, html and js demonstrating REST services.
 
 ## Architecture
+Author: [Emanuele Della Valle](http://emanueledellavalle.org/), [Matteo Valoriani](https://www.linkedin.com/in/matteovaloriani/)
 
 This is a web-based client-server application.
 
@@ -54,7 +57,6 @@ The client is an HTML 5 web page that
   - the other decrements the counter by calling the `GET /dec?n=<value>` service.
 
 In particular, the server uses CORS ([Cross-Origin Resource Sharing](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing)).
-
 
 ## prerequisites
 
