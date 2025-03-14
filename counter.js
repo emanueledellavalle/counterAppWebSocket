@@ -1,25 +1,12 @@
 const express = require('express');
-const fs = require('fs');
-const cors = require('cors');
 const app = express();
 
-app.use(cors())
+// Serve static files from 'public' folder
+app.use(express.static('public'));
 
 let counter = 0;
 
-app.get('/client', (req, res) => {
-  fs.readFile('client.html', 'utf8', (err, data) => {
-    if (err) {
-      console.error('Error reading file:', err);
-      res.status(500).send('Error reading file');
-      return;
-    }
-
-    res.send(data);
-  });
-});
-
-app.get('/', (req, res) => {
+app.get('/value', (req, res) => {
   res.send(`${counter}`);
 });
 

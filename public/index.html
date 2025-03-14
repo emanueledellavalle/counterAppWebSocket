@@ -7,17 +7,14 @@
 <body>
   <h1>Counter App</h1>
   <p>Current Value: <span id="counterValue"></span></p>
-  <input type="number" id="valueInput" placeholder="Enter value">
+  <input type="number" id="valueInput" placeholder="Enter value" value="1">
   <button onclick="increment()">Increment</button>
   <button onclick="decrement()">Decrement</button>
 
   <script>
-  
-  	baseAdd = "http://127.0.0.1:3000"
-  
     function updateCounter() {
       $.ajax({
-        url: baseAdd+'/',
+        url: '/value',
         type: 'GET',
         success: function(response) {
           $('#counterValue').text(response);
@@ -31,7 +28,7 @@
     function increment() {
       const value = $('#valueInput').val();
       $.ajax({
-        url: baseAdd+'/inc?n=' + value,
+        url: '/inc?n=' + value,
         type: 'GET',
         success: function() {
           updateCounter();
@@ -45,7 +42,7 @@
     function decrement() {
       const value = $('#valueInput').val();
       $.ajax({
-        url: baseAdd+'/dec?n=' + value,
+        url: '/dec?n=' + value,
         type: 'GET',
         success: function() {
           updateCounter();
@@ -58,6 +55,9 @@
 
     // Initial counter value retrieval
     updateCounter();
+
+    // Auto-refresh every second
+    setInterval(updateCounter, 1000);
   </script>
 </body>
 </html>
