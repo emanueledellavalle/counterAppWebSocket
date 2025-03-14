@@ -1,63 +1,46 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Counter App</title>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <title>Counter App with WebSocket</title>
 </head>
 <body>
-  <h1>Counter App</h1>
-  <p>Current Value: <span id="counterValue"></span></p>
+  <h1>Counter App (WebSocket)</h1>
+  <p>Current Value: <span id="counterValue">0</span></p>
   <input type="number" id="valueInput" placeholder="Enter value" value="1">
   <button onclick="increment()">Increment</button>
   <button onclick="decrement()">Decrement</button>
 
   <script>
-    function updateCounter() {
-      $.ajax({
-        url: '/value',
-        type: 'GET',
-        success: function(response) {
-          $('#counterValue').text(response);
-        },
-        error: function() {
-          console.log('Error occurred while retrieving the counter value');
-        }
-      });
-    }
+    const counterValue = document.getElementById('counterValue');
+    const valueInput = document.getElementById('valueInput');
+
+    // Setup WebSocket connection considering if web app is running on http or https
+
+    const protocol = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
+    const socket = new WebSocket(protocol + window.location.host);
+
+    socket.onopen = () => {
+      console.log('Connected to WebSocket');
+    };
+
+    socket.onmessage = (event) => {
+      console.log('Counter updated:', event.data);
+      counterValue.innerText = event.data;
+    };
+
+    socket.onclose = () => {
+      console.log('WebSocket connection closed');
+    };
 
     function increment() {
-      const value = $('#valueInput').val();
-      $.ajax({
-        url: '/inc?n=' + value,
-        type: 'GET',
-        success: function() {
-          updateCounter();
-        },
-        error: function() {
-          console.log('Error occurred while incrementing the counter');
-        }
-      });
+      const value = valueInput.value;
+      fetch(`/inc?n=${value}`).then(response => console.log('Increment done'));
     }
 
     function decrement() {
-      const value = $('#valueInput').val();
-      $.ajax({
-        url: '/dec?n=' + value,
-        type: 'GET',
-        success: function() {
-          updateCounter();
-        },
-        error: function() {
-          console.log('Error occurred while decrementing the counter');
-        }
-      });
+      const value = valueInput.value;
+      fetch(`/dec?n=${value}`).then(response => console.log('Decrement done'));
     }
-
-    // Initial counter value retrieval
-    updateCounter();
-
-    // Auto-refresh every second
-    setInterval(updateCounter, 1000);
   </script>
 </body>
 </html>
